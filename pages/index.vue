@@ -1,0 +1,108 @@
+<template>
+  <div class="">
+    <v-card elevation="0" class="ma-1" rounded="xl" color="orange">
+      <v-card-title style="color: white">This all users</v-card-title>
+    </v-card>
+    <v-card elevation="0" class="ma-1" rounded="xl" color="orange" min-height="90vh">
+      <v-card-title>
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12" :md="6" class="d-flex flex-wrap justify-center" style="border: 1px solid red">
+            <div>
+              <div>
+                <v-btn style="border-radius: 50% !important;" size="circle" class="pa-2"
+                       :class="user.status? 'bg-blue' : 'bg-red'" density="compact">
+                  <v-avatar style="background-color: #1c1917" role="button" size="300"></v-avatar>
+                </v-btn>
+              </div>
+              <div class="block-class d-flex">
+                <h4 class="ml-1 mr-auto">{{user.name}} | </h4>
+                <div>{{user.notification.length}} msg</div>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" :md="6" style="border: 1px solid red">
+            <div class="px-3" style="border-radius: 15px; background-color: cornsilk">
+              <div style="font-size: 20px">@{{user.userName}}</div>
+              <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
+            </div>
+            <v-btn size="small" @click="openMsg" elevation="0">Messages</v-btn>
+            <div v-if="msgList === true" class="px-3" style="border-radius: 15px; border: 1px solid white; color: white">
+              <div v-for="item in user.notification">
+                <v-icon size="small" class="my-0">mdi-message</v-icon>
+                <div>{{item.message}}</div>
+                <div style="font-size: 10px">{{getSTDate(item.date)}}</div>
+                <hr class="mb-3"/>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card-title>
+    </v-card>
+  </div>
+</template>
+<script setup>
+import {ref} from "vue";
+
+const msgList = ref(false);
+function openMsg() {
+  msgList.value = !msgList.value
+}
+function getSTDate(dateString){
+  const date = new Date(dateString);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const day = String(date.getDate()).padStart(2, '0');
+
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+const user = ref(
+    {
+    "_id": "6663f9e71886bfbad7d06e6d",
+    "chatId": 1047930758,
+    "name": "Tυɾԃιყҽʋ",
+    "userName": "Turdiyev07",
+    "admin": true,
+    "action": "lang",
+    "status": true,
+    "createDate": "2024-06-08T06:27:51.363Z",
+    "__v": 0,
+    "phone": "+998916384402",
+    "lang": "",
+    "notification": [
+    {
+    "message": "wkdsadkj asd asd asd",
+    "date": "2024-07-17T17:26:08.388Z",
+    "notif": false,
+    "_id": "6697feb0009f5f89a37ad32a"
+    },
+    {
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
+    "notif": false,
+    "_id": "6697feb4009f5f89a37ad331"
+    },
+    {
+    "message": "sad asd as d",
+    "date": "2024-07-17T17:26:15.436Z",
+    "notif": false,
+    "_id": "6697feb7009f5f89a37ad33b"
+    }
+    ]
+    },
+);
+
+</script>
+<style scoped>
+.block-class{
+  margin: 5px 0;
+  padding: 0 10px;
+  background-color: #1c2331;
+  color: cornsilk;
+  border-radius: 15px;
+}
+</style>
