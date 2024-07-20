@@ -1,9 +1,12 @@
 <template>
   <div class="">
     <v-card elevation="0" class="ma-1" rounded="xl" color="orange">
-      <v-card-title style="color: white">This all users</v-card-title>
+      <v-card-title style="color: white">
+        <v-btn rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
+        <v-btn rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
+      </v-card-title>
     </v-card>
-    <v-card elevation="0" class="ma-1" rounded="xl" color="orange" min-height="90vh">
+    <v-card elevation="0" class="ma-1" rounded="xl" color="orange" min-height="95vh">
       <v-card-title>
         <v-row class="ma-0 pa-0">
           <v-col cols="12" :md="6" class="d-flex flex-wrap justify-center">
@@ -28,15 +31,25 @@
               </div>
               <v-btn rounded="xl" size="small" @click="openMsg" elevation="0">Messages</v-btn>
             </div>
-            <v-dialog v-model="msgList" transition="dialog-bottom-transition" class="px-3 mt-15">
+            <v-dialog persistent v-model="msgList" max-width="600px" transition="dialog-bottom-transition" class="px-3">
               <div class="block-class">
-                <v-card v-for="item in user.notification" class="pa-3 my-2" rounded="xl">
-                  <v-icon size="small" class="my-0">mdi-message</v-icon>
-                  <div>{{item.message}}</div>
-                  <hr/>
-                  <div style="font-size: 10px">{{getSTDate(item.date)}}</div>
-                </v-card>
-                <v-btn class="ml-auto mb-3" rounded color="error" @click="msgList = false">close</v-btn>
+                <div class="d-flex justify-end">
+                  <v-btn class="my-2" rounded color="red" size="small" @click="msgList = false">x</v-btn>
+                </div>
+                <v-virtual-scroll
+                  :items="user.notification"
+                  height="500">
+                  <template v-slot:default="{ item }">
+                    <v-list-item>
+                      <v-card class="pa-3" rounded="xl">
+                        <v-icon size="small" class="my-0">mdi-message</v-icon>
+                        <div>{{item.message}}</div>
+                        <hr/>
+                        <div class="d-flex justify-end" style="font-size: 10px">{{getSTDate(item.date)}}</div>
+                      </v-card>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
               </div>
             </v-dialog>
           </v-col>
@@ -92,15 +105,41 @@ const user = ref(
     "_id": "6697feb4009f5f89a37ad331"
     },
     {
-    "message": "sad asd as d",
-    "date": "2024-07-17T17:26:15.436Z",
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
     "notif": false,
-    "_id": "6697feb7009f5f89a37ad33b"
-    }
+    "_id": "6697feb4009f5f89a37ad331"
+    },
+    {
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
+    "notif": false,
+    "_id": "6697feb4009f5f89a37ad331"
+    },
+    {
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
+    "notif": false,
+    "_id": "6697feb4009f5f89a37ad331"
+    },
+    {
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
+    "notif": false,
+    "_id": "6697feb4009f5f89a37ad331"
+    },
+    {
+    "message": "asd as asd as dasd",
+    "date": "2024-07-17T17:26:12.928Z",
+    "notif": false,
+    "_id": "6697feb4009f5f89a37ad331"
+    },
     ]
     },
 );
-
+function getUser() {
+  
+}
 </script>
 <style scoped>
 .block-class{
