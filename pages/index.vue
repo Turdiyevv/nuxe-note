@@ -6,7 +6,7 @@
     <v-card elevation="0" class="ma-1" rounded="xl" color="orange" min-height="90vh">
       <v-card-title>
         <v-row class="ma-0 pa-0">
-          <v-col cols="12" :md="6" class="d-flex flex-wrap justify-center" style="border: 1px solid red">
+          <v-col cols="12" :md="6" class="d-flex flex-wrap justify-center">
             <div>
               <div>
                 <v-btn style="border-radius: 50% !important;" size="circle" class="pa-2"
@@ -20,20 +20,25 @@
               </div>
             </div>
           </v-col>
-          <v-col cols="12" :md="6" style="border: 1px solid red">
-            <div class="px-3" style="border-radius: 15px; background-color: cornsilk">
-              <div style="font-size: 20px">@{{user.userName}}</div>
-              <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
-            </div>
-            <v-btn size="small" @click="openMsg" elevation="0">Messages</v-btn>
-            <div v-if="msgList === true" class="px-3" style="border-radius: 15px; border: 1px solid white; color: white">
-              <div v-for="item in user.notification">
-                <v-icon size="small" class="my-0">mdi-message</v-icon>
-                <div>{{item.message}}</div>
-                <div style="font-size: 10px">{{getSTDate(item.date)}}</div>
-                <hr class="mb-3"/>
+          <v-col cols="12" :md="6">
+            <div class="px-3 d-flex align-center" style="border-radius: 15px; background-color: cornsilk">
+              <div class="mr-auto">
+                <div style="font-size: 20px">@{{user.userName}}</div>
+                <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
               </div>
+              <v-btn rounded="xl" size="small" @click="openMsg" elevation="0">Messages</v-btn>
             </div>
+            <v-dialog v-model="msgList" transition="dialog-bottom-transition" class="px-3 mt-15">
+              <div class="block-class">
+                <v-card v-for="item in user.notification" class="pa-3 my-2" rounded="xl">
+                  <v-icon size="small" class="my-0">mdi-message</v-icon>
+                  <div>{{item.message}}</div>
+                  <hr/>
+                  <div style="font-size: 10px">{{getSTDate(item.date)}}</div>
+                </v-card>
+                <v-btn class="ml-auto mb-3" rounded color="error" @click="msgList = false">close</v-btn>
+              </div>
+            </v-dialog>
           </v-col>
         </v-row>
       </v-card-title>
