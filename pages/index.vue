@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex justify-center">
-    <v-card elevation="0" class="ma-1" rounded="xl" color="black" min-height="95vh" width="1000px">
+    <v-card elevation="0" class="ma-1" rounded="xl" color="black" min-height="100vh" width="1000px">
       <v-card-title style="color: white">
         <v-btn rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
         <v-btn rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
@@ -74,6 +74,10 @@ function getSTDate(dateString){
   const seconds = String(date.getSeconds()).padStart(2, '0');
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+async function myInfo() {
+
 }
 const user = ref(
     {
