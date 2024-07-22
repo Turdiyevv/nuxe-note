@@ -5,49 +5,54 @@
         <v-btn rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
         <v-btn rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
       </v-card-title>
-      <v-card-title class="d-flex justify-center" style="border: 1px solid red">
-            <div style="border: 1px solid red">
-              <v-btn style="border-radius: 50% !important;" size="circle" class="pa-2"
-                     :class="user.status? 'bg-blue' : 'bg-red'" density="compact">
-                <v-avatar style="background-color: #1c1917" role="button" size="300"></v-avatar>
-              </v-btn>
-              <div class="block-class d-flex">
-                <h4 class="ml-1 mr-auto" >{{user.name}} | </h4>
-                <div>{{user.notification.length}} msg</div>
-              </div>
-              <div class="px-3 d-flex align-center block-class">
-                <div>
-                  <div style="font-size: 20px">@{{user.userName}}</div>
-                  <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
-                </div>
-                <v-btn rounded="xl" size="small" @click="openMsg" elevation="0">Messages</v-btn>
-              </div>
-              <div class="px-3 d-flex align-center block-class">
-                <NuxtLink to="/">Home</NuxtLink>
-                <NuxtLink to="msgs">Messages</NuxtLink>
-              </div>
+      <v-card-title>
+        <div>
+          <div class="d-flex justify-center">
+            <v-btn style="border-radius: 50% !important;" size="circle" class="pa-2"
+                   :class="user.status? 'bg-blue' : 'bg-red'" density="compact">
+              <v-avatar style="background-color: #1c1917" role="button" size="300"></v-avatar>
+            </v-btn>
+          </div>
+          <div class="block-class d-flex">
+            <h4 class="ml-1 mr-auto" >{{user.name}} | </h4>
+            <div>{{user.notification.length}} msg</div>
+          </div>
+          <div class="px-3 d-flex align-center block-class">
+            <div>
+              <div style="font-size: 20px">@{{user.userName}}</div>
+              <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
             </div>
-            <v-dialog persistent v-model="msgList" max-width="600px" transition="dialog-bottom-transition" class="px-3">
-              <div class="block-class">
-                <div class="d-flex justify-end">
-                  <v-btn class="my-2" rounded color="red" size="small" @click="msgList = false">x</v-btn>
-                </div>
-                <v-virtual-scroll
-                  :items="user.notification"
-                  height="500">
-                  <template v-slot:default="{ item }">
-                    <v-list-item>
-                      <v-card class="pa-3" rounded="xl">
-                        <v-icon size="small" class="my-0">mdi-message</v-icon>
-                        <div>{{item.message}}</div>
-                        <hr/>
-                        <div class="d-flex justify-end" style="font-size: 10px">{{getSTDate(item.date)}}</div>
-                      </v-card>
-                    </v-list-item>
-                  </template>
-                </v-virtual-scroll>
+            <v-btn rounded="xl" size="small" @click="openMsg" elevation="0">Messages</v-btn>
+          </div>
+          <v-tabs v-model="tab" bg-color="primary" class="block-class">
+            <v-tab value="one">Item One</v-tab>
+            <v-tab value="two">Item Two</v-tab>
+            <v-tab value="three" >Messages</v-tab>
+          </v-tabs>
+          <v-tabs-window v-model="tab">
+            <v-tabs-window-item value="one">
+              one
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="two">
+              Two
+            </v-tabs-window-item>
+
+            <v-tabs-window-item value="three">
+              <div>
+                <v-card v-for="(item, index) in user.notification" class="pa-2 my-1" rounded="xl">
+                  <div>
+                    <v-icon size="x-small" class="my-0">mdi-message</v-icon>
+                    <span style="font-size: 15px">{{index+1}}</span>
+                  </div>
+                  <div style="font-size: 18px">{{item.message}}</div>
+                  <hr/>
+                  <div class="d-flex justify-end" style="font-size: 10px">{{getSTDate(item.date)}}</div>
+                </v-card>
               </div>
-            </v-dialog>
+            </v-tabs-window-item>
+          </v-tabs-window>
+        </div>
       </v-card-title>
     </v-card>
   </div>
@@ -55,10 +60,8 @@
 <script setup>
 import {ref} from "vue";
 
-const msgList = ref(false);
-function openMsg() {
-  msgList.value = !msgList.value
-}
+const tab = ref(null);
+
 function getSTDate(dateString){
   const date = new Date(dateString);
 
