@@ -2,8 +2,8 @@
   <div class="d-flex justify-center">
     <v-card elevation="0" class="ma-1" rounded="xl" color="black" min-height="100vh" width="1000px">
       <v-card-title style="color: white">
-        <v-btn rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
-        <v-btn rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
+        <v-btn variant="outlined" rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
+        <v-btn variant="outlined" v-if="user.admin" rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
       </v-card-title>
       <v-card-title>
         <div>
@@ -17,25 +17,28 @@
             <h4 class="ml-1 mr-auto" >{{user.name}} | </h4>
             <div>{{user.notification.length}} msg</div>
           </div>
-          <div class="px-3 d-flex align-center block-class">
-            <div>
-              <div style="font-size: 20px">@{{user.userName}}</div>
-              <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
-            </div>
-            <v-btn rounded="xl" size="small" @click="openMsg" elevation="0">Messages</v-btn>
+          <div class="px-3 align-center block-class">
+            <div style="font-size: 20px">@{{user.userName}}</div>
+            <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
           </div>
-          <v-tabs v-model="tab" bg-color="primary" class="block-class">
-            <v-tab value="one">Item One</v-tab>
-            <v-tab value="two">Item Two</v-tab>
-            <v-tab value="three" >Messages</v-tab>
+          <v-tabs v-model="tab" bg-color="blue-grey-darken-4" class="block-class">
+            <v-tab value="one">
+              <v-btn variant="outlined" rounded size="small">Cards</v-btn>
+            </v-tab>
+            <v-tab value="two">
+              <v-btn variant="outlined" rounded size="small">Friends</v-btn>
+            </v-tab>
+            <v-tab value="three">
+              <v-btn variant="outlined" rounded size="small">Messages</v-btn>
+            </v-tab>
           </v-tabs>
           <v-tabs-window v-model="tab">
             <v-tabs-window-item value="one">
-              one
+              cards
             </v-tabs-window-item>
 
             <v-tabs-window-item value="two">
-              Two
+              friends
             </v-tabs-window-item>
 
             <v-tabs-window-item value="three">
@@ -59,6 +62,7 @@
 </template>
 <script setup>
 import {ref} from "vue";
+import axios from "axios";
 
 const tab = ref(null);
 
@@ -76,68 +80,31 @@ function getSTDate(dateString){
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-async function myInfo() {
-
+const fetchUser = async (phone) => {
+    try {
+        const response = await fetch(`http://localhost:3001/api/userByPhone`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phone }),
+        })
+        const data = await response.json()
+        user.value = data
+    } catch (err) {
+        console.error(err)
+    }
 }
-const user = ref(
-    {
-    "_id": "6663f9e71886bfbad7d06e6d",
-    "chatId": 1047930758,
-    "name": "Tυɾԃιყҽʋ",
-    "userName": "Turdiyev07",
-    "admin": true,
-    "action": "lang",
-    "status": true,
-    "createDate": "2024-06-08T06:27:51.363Z",
-    "__v": 0,
-    "phone": "+998916384402",
-    "lang": "",
-    "notification": [
-    {
-    "message": "wkdsadkj asd asd asd",
-    "date": "2024-07-17T17:26:08.388Z",
-    "notif": false,
-    "_id": "6697feb0009f5f89a37ad32a"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    ]
-    },
-);
+
+onMounted(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const phone = urlParams.get('phone')
+    if (phone) {
+        fetchUser(phone)
+    }
+})
+// myInfo({})
+const user = ref([]);
 function getUser() {
 
 }
