@@ -15,7 +15,7 @@
           </div>
           <div class="block-class d-flex">
             <h4 class="ml-1 mr-auto" >{{user.name}} | </h4>
-            <div>{{user.notification.length}} msg</div>
+            <div>{{user.notification?.length}} msg</div>
           </div>
           <div class="px-3 align-center block-class">
             <div style="font-size: 20px">@{{user.userName}}</div>
