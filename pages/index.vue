@@ -3,23 +3,23 @@
     <v-card elevation="0" class="ma-1" rounded="xl" color="black" min-height="100vh" width="1000px">
       <v-card-title style="color: white">
         <v-btn variant="outlined" rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
-        <v-btn variant="outlined" v-if="user.admin" rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
+        <v-btn @click="allUsers" variant="outlined" v-if="user?.admin" rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
       </v-card-title>
       <v-card-title>
         <div>
           <div class="d-flex justify-center">
             <v-btn style="border-radius: 50% !important;" size="circle" class="pa-2"
-                   :class="user.status? 'bg-blue' : 'bg-red'" density="compact">
+                   :class="user?.status? 'bg-blue' : 'bg-red'" density="compact">
               <v-avatar style="background-color: #1c1917" role="button" size="300"></v-avatar>
             </v-btn>
           </div>
           <div class="block-class d-flex">
-            <h4 class="ml-1 mr-auto" >{{user.name}} | </h4>
-            <div>{{user.notification?.length}} msg</div>
+            <h4 class="ml-1 mr-auto" >{{user?.name}} | </h4>
+            <div>{{user?.notification?.length}} msg</div>
           </div>
           <div class="px-3 align-center block-class">
-            <div style="font-size: 20px">@{{user.userName}}</div>
-            <div style="font-size: 10px">{{getSTDate(user.createDate)}}</div>
+            <div style="font-size: 20px">@{{user?.userName}}</div>
+            <div style="font-size: 10px">{{getSTDate(user?.createDate)}}</div>
           </div>
           <v-tabs v-model="tab" bg-color="blue-grey-darken-4" class="block-class">
             <v-tab value="one">
@@ -80,7 +80,33 @@ function getSTDate(dateString){
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-const user = ref();
+const user = ref({
+        "_id": "6663f9e71886bfbad7d06e6d",
+      "chatId": 1047930758,
+      "name": "Tυɾԃιყҽʋ",
+      "userName": "Turdiyev07",
+      "admin": true,
+      "action": "write-note",
+      "status": true,
+      "createDate": "2024-06-08T06:27:51.363Z",
+      "__v": 0,
+      "phone": "+998916384402",
+      "lang": "Uz",
+      "notification": [
+      {
+      "message": "wkdsadkj asd asd asd",
+      "date": "2024-07-17T17:26:08.388Z",
+      "notif": false,
+      "_id": "6697feb0009f5f89a37ad32a"
+      },
+      {
+      "message": "asd as asd as dasd",
+      "date": "2024-07-17T17:26:12.928Z",
+      "notif": false,
+      "_id": "6697feb4009f5f89a37ad331"
+      }
+      ]
+                 });
 const myInfo = async (phone) => {
     try {
         const response = await axios.post('http://localhost:3001/api/userByPhone', {
@@ -88,6 +114,16 @@ const myInfo = async (phone) => {
         });
         user.value = response.data;
         alert(user)
+    } catch (err) {
+        console.error(err);
+        alert(err)
+    }
+}
+const allUsers = async () => {
+    try {
+        const res = await axios.get('http://localhost:3001/api/users');
+        // user.value = response.data;
+        alert(res)
     } catch (err) {
         console.error(err);
         alert(err)
