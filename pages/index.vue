@@ -80,92 +80,27 @@ function getSTDate(dateString){
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-const fetchUser = async (phone) => {
+const user = ref();
+const myInfo = async (phone) => {
     try {
-        const response = await fetch(`http://localhost:3001/api/userByPhone`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ phone }),
-        })
-        const data = await response.json()
-        user.value = data
+        const response = await axios.post('http://localhost:3001/api/userByPhone', {
+            phone: phone
+        });
+        user.value = response.data;
+        alert(user)
     } catch (err) {
-        console.error(err)
+        console.error(err);
+        alert(err)
     }
 }
-
 onMounted(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const phone = urlParams.get('phone')
-    if (phone) {
-        fetchUser(phone)
-    }
+  //   const urlParams = new URLSearchParams(window.location.search)
+  // console.log(window.location.search)
+  //   const phone = urlParams.get('phone')
+    // if (phone) {
+    //     myInfo(phone)
+    // }
 })
-// myInfo({})
-const user = ref(
-    {
-    "_id": "6663f9e71886bfbad7d06e6d",
-    "chatId": 1047930758,
-    "name": "Tυɾԃιყҽʋ",
-    "userName": "Turdiyev07",
-    "admin": true,
-    "action": "lang",
-    "status": true,
-    "createDate": "2024-06-08T06:27:51.363Z",
-    "__v": 0,
-    "phone": "+998916384402",
-    "lang": "",
-    "notification": [
-    {
-    "message": "wkdsadkj asd asd asd",
-    "date": "2024-07-17T17:26:08.388Z",
-    "notif": false,
-    "_id": "6697feb0009f5f89a37ad32a"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    {
-    "message": "asd as asd as dasd",
-    "date": "2024-07-17T17:26:12.928Z",
-    "notif": false,
-    "_id": "6697feb4009f5f89a37ad331"
-    },
-    ]
-    },
-);
-function getUser() {
-
-}
 </script>
 <style scoped>
 .block-class{
