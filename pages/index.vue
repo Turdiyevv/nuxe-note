@@ -80,45 +80,7 @@ function getSTDate(dateString){
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-const user = ref({
-        "_id": "6663f9e71886bfbad7d06e6d",
-      "chatId": 1047930758,
-      "name": "Tυɾԃιყҽʋ",
-      "userName": "Turdiyev07",
-      "admin": true,
-      "action": "write-note",
-      "status": true,
-      "createDate": "2024-06-08T06:27:51.363Z",
-      "__v": 0,
-      "phone": "+998916384402",
-      "lang": "Uz",
-      "notification": [
-      {
-      "message": "wkdsadkj asd asd asd",
-      "date": "2024-07-17T17:26:08.388Z",
-      "notif": false,
-      "_id": "6697feb0009f5f89a37ad32a"
-      },
-      {
-      "message": "asd as asd as dasd",
-      "date": "2024-07-17T17:26:12.928Z",
-      "notif": false,
-      "_id": "6697feb4009f5f89a37ad331"
-      }
-      ]
-                 });
-const myInfo = async (phone) => {
-    try {
-        const response = await axios.post('http://localhost:3001/api/userByPhone', {
-            phone: phone
-        });
-        user.value = response.data;
-        alert(user)
-    } catch (err) {
-        console.error(err);
-        alert(err)
-    }
-}
+const user = ref({});
 const allUsers = async () => {
     try {
         const res = await axios.get('http://localhost:3001/api/users');
@@ -129,13 +91,10 @@ const allUsers = async () => {
         alert(err)
     }
 }
-onMounted(() => {
-  //   const urlParams = new URLSearchParams(window.location.search)
-  // console.log(window.location.search)
-  //   const phone = urlParams.get('phone')
-    // if (phone) {
-    //     myInfo(phone)
-    // }
+onMounted(async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+    const phone = urlParams.get('phone');
+  console.log('funksiya ishlashi', phone);
 })
 </script>
 <style scoped>
