@@ -97,12 +97,14 @@ async function fetchUser (phone) {
     user.value = res.data;
     console.log(res)
   } catch (err) {
-    console.error(err);
+    alert(err);
+    // console.error(err);
   }
 }
 
 onMounted(async () => {
-  const phone = route.query.phone;
+  // const phone = route.query.phone;
+  const phone = 998916384402;
   if (phone){
     await fetchUser(phone);
   }
