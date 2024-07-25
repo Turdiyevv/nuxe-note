@@ -3,7 +3,7 @@
     <v-card elevation="0" class="ma-1" rounded="xl" color="black" min-height="100vh" width="1000px">
       <v-card-title style="color: white">
         <v-btn variant="outlined" rounded="xl" color="white" class="mx-2" elevation="0">Your cabinet</v-btn>
-        <v-btn @click="allUsers" variant="outlined" v-if="user?.admin" rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
+        <v-btn @click="allUsers" variant="outlined" rounded="xl" color="white" class="mx-2" elevation="0">all users</v-btn>
       </v-card-title>
       <v-card-title>
         <div>
@@ -61,8 +61,10 @@
   </div>
 </template>
 <script setup>
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
+import { useRoute } from 'vue-router';
 import axios from "axios";
+const route = useRoute();
 
 const tab = ref(null);
 
@@ -81,20 +83,29 @@ function getSTDate(dateString){
 }
 
 const user = ref({});
-const allUsers = async () => {
+async function allUsers () {
     try {
         const res = await axios.get('http://localhost:3001/api/users');
-        // user.value = response.data;
-        alert(res)
+        user.value = res.data;
     } catch (err) {
         console.error(err);
-        alert(err)
     }
 }
+async function fetchUser (phone) {
+  try {
+    const res = await axios.post('http://localhost:3001/api/userByPhone', { phone });
+    user.value = res.data;
+    console.log(res)
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 onMounted(async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-    const phone = urlParams.get('phone');
-  console.log('funksiya ishlashi', phone);
+  const phone = route.query.phone;
+  if (phone){
+    await fetchUser(phone);
+  }
 })
 </script>
 <style scoped>
