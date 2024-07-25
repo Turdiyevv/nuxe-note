@@ -103,10 +103,12 @@ async function fetchUser (phone) {
 }
 
 onMounted(async () => {
-  // const phone = route.query.phone;
-  const phone = 998916384402;
+  const phone = route.query.phone;
   if (phone){
-    await fetchUser(phone);
+    alert(phone)
+    // await fetchUser(phone);
+  }else {
+    alert('no phone');
   }
 })
 </script>
