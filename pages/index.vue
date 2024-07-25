@@ -103,11 +103,11 @@ async function fetchUser (phone) {
 }
 
 onMounted(async () => {
-  const phone = route.query.phone;
+  const phone = route.query.phone ? String(route.query.phone) : '';
   if (phone){
-    alert(phone)
+      console.log(phone)
     try {
-      const res = await axios.post('http://localhost:3001/api/userByPhone', phone);
+      const res = await axios.post('http://localhost:3001/api/userByPhone', {phone});
       user.value = res.data;
     } catch (err) {
       alert(err);
