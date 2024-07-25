@@ -106,7 +106,13 @@ onMounted(async () => {
   const phone = route.query.phone;
   if (phone){
     alert(phone)
-    // await fetchUser(phone);
+    try {
+      const res = await axios.post('http://localhost:3001/api/userByPhone', phone);
+      user.value = res.data;
+    } catch (err) {
+      alert(err);
+      // console.error(err);
+    }
   }else {
     alert('no phone');
   }
