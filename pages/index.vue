@@ -103,12 +103,12 @@ async function fetchUser (phone) {
 }
 
 onMounted(async () => {
-  const mainUser = route.query.user;
-  if (mainUser){
-    alert(mainUser)
+  const phone = route.query.phone;
+  if (phone){
+    alert(phone)
     // await fetchUser(phone);
   }else {
-    alert('no user');
+    alert('no phone');
   }
 })
 </script>
