@@ -91,21 +91,12 @@ async function allUsers () {
         console.error(err);
     }
 }
-async function fetchUser (phone) {
-  try {
-    const res = await axios.post('http://localhost:3001/api/userByPhone', { phone });
-    user.value = res.data;
-    console.log(res)
-  } catch (err) {
-    alert(err);
-    // console.error(err);
-  }
-}
 
 onMounted(async () => {
   const phone = route.query.phone ? String(route.query.phone) : '';
   if (phone){
     try {
+      alert(phone);
       const res = await axios.post('http://localhost:3001/api/userByPhone', {phone});
       user.value = res.data;
     } catch (err) {
