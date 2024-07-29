@@ -85,7 +85,7 @@ function getSTDate(dateString){
 const user = ref({});
 async function allUsers () {
     try {
-        const res = await axios.get('http://localhost:3001/api/users');
+        const res = await axios.get('/api/users');
         user.value = res.data;
     } catch (err) {
         console.error(err);
@@ -97,7 +97,7 @@ onMounted(async () => {
   if (phone){
     try {
       alert(phone);
-      const res = await axios.post('http://localhost:3001/api/userByPhone', {phone});
+      const res = await axios.post('/api/userByPhone', {phone});
       user.value = res.data;
     } catch (err) {
       alert(err);
