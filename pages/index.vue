@@ -93,8 +93,9 @@ async function allUsers () {
 }
 
 onMounted(async () => {
-  const phone = route.query.phone ? String(route.query.phone) : '';
+  let phone = route.query.phone;
   if (phone){
+    String(phone);
       alert(phone);
     try {
       const res = await axios.post('/api/userByPhone', {phone});
