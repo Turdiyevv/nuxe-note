@@ -93,16 +93,14 @@ async function allUsers () {
 }
 
 onMounted(async () => {
-  // const phone = route.query.phone ? String(route.query.phone) : '';
-  const phone = 998916384402;
+  const phone = route.query.phone ? String(route.query.phone) : '';
   if (phone){
-    try {
       alert(phone);
+    try {
       const res = await axios.post('/api/userByPhone', {phone});
       user.value = res.data;
     } catch (err) {
       alert(err);
-      // console.error(err);
     }
   }else {
     alert('no phone');
