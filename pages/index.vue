@@ -93,7 +93,8 @@ async function allUsers () {
 }
 
 onMounted(async () => {
-  const phone = route.query.phone ? String(route.query.phone) : '';
+  // const phone = route.query.phone ? String(route.query.phone) : '';
+  const phone = 998916384402;
   if (phone){
     try {
       alert(phone);
